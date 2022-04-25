@@ -7,6 +7,8 @@ bool IsLarger(int,int);
 
 /*
     count the number of times a depth measurement increases from the previous measurement in a given file
+
+    pt 2: group 3 at a time and compare to previous group (sliding window)
 */
 
 int main()
@@ -20,6 +22,7 @@ int main()
 
     int lineCount = 0;
 
+    // groups to keep track of in the sliding window
     int first, second, third = 0;
 
     bool firstRound = true;
@@ -39,11 +42,13 @@ int main()
             // cout << second<< endl;
             // cout << third<< endl;
 
+            // Make sure 3 lines have been read before comparing previous groups
             if (lineCount > 3)
             {
                 firstRound = false;
             }
 
+            // reset (and compare) first group  
             if (lineCount % 3 == 0)
             {
                 if (!firstRound && IsLarger(prev, first))
@@ -54,6 +59,7 @@ int main()
                 first = lineNum;
                 second += lineNum; third += lineNum;
             }
+            // reset (and compare) second group  
             if (lineCount % 3 == 1)
             {
                 if (!firstRound && IsLarger(prev, second))
@@ -65,6 +71,7 @@ int main()
                 first+= lineNum; third += lineNum;
 
             }
+            // reset (and compare) third group  
             if (lineCount % 3 == 2)
             {
                 if (!firstRound && IsLarger(prev, third))
