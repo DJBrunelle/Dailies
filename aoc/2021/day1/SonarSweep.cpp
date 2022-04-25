@@ -18,6 +18,12 @@ int main()
 
     int increaseCount = 0;
 
+    int lineCount = 0;
+
+    int first, second, third = 0;
+
+    bool firstRound = true;
+
     if (file.is_open())
     {
         string line;
@@ -25,20 +31,57 @@ int main()
         {
             getline(file,line);
 
-            int next = stoi(line);
+            int lineNum = stoi(line);
 
-            if (IsLarger(prev, next))
+            // cout << "run: " << lineCount << endl;
+
+            // cout << first<< endl;
+            // cout << second<< endl;
+            // cout << third<< endl;
+
+            if (lineCount > 3)
             {
-                increaseCount++;
+                firstRound = false;
             }
 
-            prev = next;
+            if (lineCount % 3 == 0)
+            {
+                if (!firstRound && IsLarger(prev, first))
+                {
+                    increaseCount++;
+                }
+                prev = first;
+                first = lineNum;
+                second += lineNum; third += lineNum;
+            }
+            if (lineCount % 3 == 1)
+            {
+                if (!firstRound && IsLarger(prev, second))
+                {
+                    increaseCount++;
+                }
+                prev = second;
+                second = lineNum;
+                first+= lineNum; third += lineNum;
+
+            }
+            if (lineCount % 3 == 2)
+            {
+                if (!firstRound && IsLarger(prev, third))
+                {
+                    increaseCount++;
+                }
+                prev = third;
+                third = lineNum;
+                first += lineNum; second += lineNum;
+            }
+            lineCount++;
         }
     }
 
     file.close();
 
-    cout << increaseCount;
+    cout << increaseCount << endl;
     
     return 0;
 }
